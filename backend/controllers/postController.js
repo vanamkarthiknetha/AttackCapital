@@ -15,3 +15,12 @@ export const getPosts = async (req, res) => {
   const posts = author ? await Post.find({ authorId: author }) : await Post.find();
   res.json(posts);
 };
+
+export const getMyPosts = async (req, res) => {
+  const { id } = req.user;
+  const author = id
+  if(author && !mongoose.Types.ObjectId.isValid(author))
+    return res.json({error:"Not a valid userId"})
+  const posts = author ? await Post.find({ authorId: author }) : await Post.find();
+  res.json(posts);
+};
